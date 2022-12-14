@@ -44,8 +44,15 @@ func NewNode(n *v1.Node) *Node {
 	return node
 }
 func (n *Node) IsOnDemand() bool {
-	return n.node.Labels["karpenter.sh/capacity-type"] == "on-demand" ||
-		n.node.Labels["eks.amazonaws.com/capacityType"] == "ON_DEMAND"
+	/*
+		return n.node.Labels["karpenter.sh/capacity-type"] == "on-demand" ||
+			n.node.Labels["eks.amazonaws.com/capacityType"] == "ON_DEMAND"
+	*/
+	//TODO: this lables is useful for AWS EKS Managed node groups
+
+	return n.node.Labels["karpenter.sh/capacity-type"] != "SPOT" &&
+		n.node.Labels["eks.amazonaws.com/capacityType"] != "spot"
+
 }
 func (n *Node) Update(node *v1.Node) {
 	n.mu.Lock()
