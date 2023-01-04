@@ -50,8 +50,9 @@ func (n *Node) IsOnDemand() bool {
 	*/
 	//TODO: this lables is useful for AWS EKS Managed node groups
 
-	return n.node.Labels["karpenter.sh/capacity-type"] != "SPOT" &&
-		n.node.Labels["eks.amazonaws.com/capacityType"] != "spot"
+	//return n.node.Labels["karpenter.sh/capacity-type"] != "SPOT" &&
+	//		n.node.Labels["eks.amazonaws.com/capacityType"] != "spot"
+	return n.node.Labels["lifecycle"] != "spot"
 
 }
 func (n *Node) Update(node *v1.Node) {
